@@ -78,7 +78,7 @@ class Berita extends React.Component {
   }
 
   handleSearch = async (e) => {
-    const {search} = e.target.value.toLowerCase()
+    const search = e.target.value.toLowerCase()
     let response = await axios.get(SEARCH_NEWS+encodeURIComponent(search)+"&apiKey="+API_KEY)
     this.setState({
       search: e.target.value.toLowerCase(),
