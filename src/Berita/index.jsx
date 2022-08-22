@@ -6,10 +6,7 @@ import axios from 'axios';
 import { Form, Navbar, Nav, Container, Button, Card } from "react-bootstrap";
 
 
-
-
 const API_KEY = "8fdc1021277a43c6b9edc3c67cdefc07";
-// const API_KEY = "f83692ff5fa84daca326087f949d97c4";
 const HEADLINES_NEWS = "https://newsapi.org/v2/top-headlines?country=id&apiKey=";
 const GENERAL_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=general&apiKey=";
 const BUSINESS_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=business&apiKey=";
@@ -81,7 +78,7 @@ class Berita extends React.Component {
     const search = e.target.value.toLowerCase()
     let response = await axios.get(SEARCH_NEWS+encodeURIComponent(search)+"&apiKey="+API_KEY)
     this.setState({
-      search: e.target.value.toLowerCase(),
+      search: search,
       newsType: search,
       newsDetails: response.data.articles
     })
