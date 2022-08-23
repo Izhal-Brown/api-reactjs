@@ -6,14 +6,19 @@ import axios from 'axios';
 import { Form, Navbar, Nav, Container, Button, Card } from "react-bootstrap";
 
 
-const API_KEY = "8fdc1021277a43c6b9edc3c67cdefc07";
-const HEADLINES_NEWS = "https://newsapi.org/v2/top-headlines?country=id&apiKey=";
-const GENERAL_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=general&apiKey=";
-const BUSINESS_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=business&apiKey=";
-const SPORTS_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=sports&apiKey=";
-const ENTERTAINMENT_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=entertainment&apiKey=";
-const TECHNOLOGY_NEWS = "https://newsapi.org/v2/top-headlines?country=id&category=technology&pageSize=8&apiKey=";
-const SEARCH_NEWS = "https://newsapi.org/v2/everything?q=";
+
+
+const API_KEY = "89f8f1d170d3d3ba82055e8f607f0352";
+const HEADLINES_NEWS = "https://gnews.io/api/v4/top-headlines?token=";
+const BUSINESS_NEWS = "https://gnews.io/api/v4/top-headlines?topic=business&token=";
+const SPORTS_NEWS = "https://gnews.io/api/v4/top-headlines?topic=sports&token=";
+const ENTERTAINMENT_NEWS = "https://gnews.io/api/v4/top-headlines?topic=entertainment&token=";
+const TECHNOLOGY_NEWS = "https://gnews.io/api/v4/top-headlines?topic=technology&token=";
+const NATIONAL_NEWS = "https://gnews.io/api/v4/top-headlines?topic=nation&token=";
+const WORLD_NEWS = "https://gnews.io/api/v4/top-headlines?topic=world&token=";
+const SCIENCE_NEWS = "https://gnews.io/api/v4/top-headlines?topic=science&token=";
+const HEALTH_NEWS = "https://gnews.io/api/v4/top-headlines?topic=health&token=";
+const SEARCH_NEWS = "https://gnews.io/api/v4/search?q=";
 
 class Berita extends React.Component {
   
@@ -30,14 +35,6 @@ class Berita extends React.Component {
   headlineNews = async () => {
     let response = await axios.get(HEADLINES_NEWS + API_KEY)
     this.setState({
-      newsDetails: response.data.articles
-    })
-  }
-
-  generalNews = async () => {
-    let response = await axios.get(GENERAL_NEWS + API_KEY)
-    this.setState({
-      newsType: "General news",
       newsDetails: response.data.articles
     })
   }
@@ -74,9 +71,41 @@ class Berita extends React.Component {
     })
   }
 
+  nationalNews = async () => {
+    let response = await axios.get(NATIONAL_NEWS + API_KEY)
+    this.setState({
+      newsType: "National News",
+      newsDetails: response.data.articles
+    })
+  }
+
+  worldNews = async () => {
+    let response = await axios.get(WORLD_NEWS + API_KEY)
+    this.setState({
+      newsType: "World News",
+      newsDetails: response.data.articles
+    })
+  }
+
+  scienceNews = async () => {
+    let response = await axios.get(SCIENCE_NEWS + API_KEY)
+    this.setState({
+      newsType: "Science News",
+      newsDetails: response.data.articles
+    })
+  }
+
+  healthNews = async () => {
+    let response = await axios.get(HEALTH_NEWS + API_KEY)
+    this.setState({
+      newsType: "Health News",
+      newsDetails: response.data.articles
+    })
+  }
+
   handleSearch = async (e) => {
     const search = e.target.value.toLowerCase()
-    let response = await axios.get(SEARCH_NEWS+encodeURIComponent(search)+"&apiKey="+API_KEY)
+    let response = await axios.get(SEARCH_NEWS+encodeURIComponent(search)+"&token="+API_KEY)
     this.setState({
       search: search,
       newsType: search,
@@ -101,12 +130,6 @@ class Berita extends React.Component {
 
                 <Nav.Link
                   href=""
-                  onClick={this.generalNews}>
-                  General
-                </Nav.Link>
-
-                <Nav.Link
-                  href=""
                   onClick={this.businessNews}>
                   Business
                 </Nav.Link>
@@ -119,15 +142,40 @@ class Berita extends React.Component {
 
                 <Nav.Link
                   href=""
+                  onClick={this.entertainmentNews}>
+                  Entertainment
+                </Nav.Link>
+
+                <Nav.Link
+                  href=""
                   onClick={this.technologiNews}>
                   Technology
                 </Nav.Link>
 
                 <Nav.Link
                   href=""
-                  onClick={this.entertainmentNews}>
-                  Entertainment
+                  onClick={this.nationalNews}>
+                  National
                 </Nav.Link>
+
+                <Nav.Link
+                  href=""
+                  onClick={this.worldNews}>
+                  World
+                </Nav.Link>
+
+                <Nav.Link
+                  href=""
+                  onClick={this.scienceNews}>
+                  Science
+                </Nav.Link>
+
+                <Nav.Link
+                  href=""
+                  onClick={this.healthNews}>
+                  Health
+                </Nav.Link>
+
 
               </Nav>
             </Navbar.Collapse>
@@ -158,7 +206,7 @@ class Berita extends React.Component {
             {
               this.state.newsDetails.map((item,index) => (
                 <Card style={{ width: '20rem' }} key={index}>
-                  <Card.Img variant="top" src={item.urlToImage} />
+                  <Card.Img variant="top" src={item.image} />
                   <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{item.publishedAt.split("T")[0]}</Card.Subtitle>
